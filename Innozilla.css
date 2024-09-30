@@ -53,13 +53,13 @@ section {
 
 /* Headings styling */
 h1 {
-    color: #004d40; /* Darker teal color */
+    color: #004d37; /* Darker teal color */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Text shadow for effect */
     font-family: 'Brush Script MT', cursive; /* Word art style */
 }
 
 h2 {
-    color: #ffffff; /* White for subheadings */
+    color: #f46dfd; /* White for subheadings */
 }
 
 /* Hero Section with background image and overlay */
@@ -186,4 +186,13 @@ p {
 /* Media Query for responsiveness */@media (max-width: 768px) {
     .card {        max-width: 100%;
         margin-bottom: 20px;    }
+}
+
+#home {
+    background-image: url('Background.webp'); /* Background image */
+    background-size: cover; /* Cover the entire section */
+    background-position: center; /* Center the image */
+    color: white; /* White text for contrast */
+    padding: 40px 20px; /* Padding for spacing */
+    text-align: center; /* Center the text */
 }
