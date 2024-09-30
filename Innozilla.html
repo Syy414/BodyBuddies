@@ -1,106 +1,297 @@
-<!DOCTYPE html> 
-<html lang="en"> 
-<head> 
-    <meta charset="UTF-8"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title>Body Buddies</title> 
-    <link rel="stylesheet" href="Innozilla.css"> 
-</head> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Body Buddies</title>
+    <link rel="stylesheet" href="Innozilla.css">
+    <style>
+        /* Basic styling for modal */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0, 0, 0, 0.6); /* Black w/ opacity */
+        }
 
-<body> 
-    <!-- Navigation Bar --> 
-    <header> 
-        <nav class="navbar"> 
-            <ul> 
-                <li><a href="#home">Home</a></li> 
-                <li><a href="#about">About</a></li> 
-                <li><a href="#services">Services</a></li> 
-                <li><a href="#contact">Contact</a></li> 
-            </ul> 
-        </nav> 
-    </header> 
+        .modal-content {
+            background-color: #fefefe;
+            margin: 20% auto; /* 20% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 60%; /* Adjusted width */
+            max-width: 500px; /* Max width for larger screens */
+            text-align: center;
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+        }
 
-    <!-- Hero Section --> 
-    <div class="hero-section"> 
-        <div class="overlay"> 
-            <div class="content"> 
-                <h1>Welcome to Body Buddies</h1> 
-                <h3>Your Partner in Wellness and Creativity</h3> 
-                <p>Join us on a journey to enhance your well-being and foster creativity.</p> 
-                <div class="buttons"> 
-                    <a href="#" class="btn primary">Discover Our Services</a> 
-                    <a href="#" class="btn secondary">Meet Our Team</a> 
-                </div> 
-            </div> 
-        </div> 
-    </div> 
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
 
-    <!-- Introduction Sections --> 
-    <section id="home" class="section"> 
-        <h1>Welcome to Body Buddies</h1> 
-        <p>This is a basic website layout with a navigation bar and background color.</p> 
-    </section> 
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
 
-    <section id="about" class="section"> 
-        <h2>About Us</h2> 
-        <p>We offer a range of services to help your business grow.</p> 
-    </section> 
+        /* Feedback Section Styling */
+        #feedback {
+            padding: 20px;
+            background: linear-gradient(135deg, #3498db, #2ecc71); /* Attractive green background */
+            color: white; /* White text color for contrast */
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px; /* Limit the width */
+            margin: 20px auto; /* Center horizontally with margin */
+        }
 
-    <section id="services" class="section"> 
-        <h2>Our Services</h2> 
-        <p>We provide web design, development, and marketing services.</p> 
-    </section> 
+        #feedback h2 {
+            margin-bottom: 10px;
+        }
 
-    <section id="contact" class="section"> 
-        <h2>Contact Us</h2> 
-        <p>Feel free to reach out through our contact form for inquiries.</p> 
-    </section> 
+        #feedback form {
+            display: flex;
+            flex-direction: column;
+        }
 
-    <!-- Latest Section --> 
-    <div class="latest-section"> 
-        <h2>Latest from Body Buddies</h2> 
-        <div class="cards-container"> 
-            <div class="card"> 
+        #feedback label {
+            margin: 5px 0;
+        }
+
+        #feedback input, 
+        #feedback textarea {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #feedback button {
+            padding: 10px;
+            background-color: #f9c74f; /* Attractive yellow button */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #feedback button:hover {
+            background-color: #f9ae3b; /* Darker yellow on hover */
+        }
+
+        /* Backgrounds for sections */
+        #home, #about, #services, #contact {
+            background-image: url('Background.webp');
+            background-size: 100% 400%; /* Scale the image to fit four times the height */
+            color: white; /* White text for contrast */
+            padding: 40px 20px; /* Padding for spacing */
+            text-align: center; /* Center the text */
+            position: relative; /* Position relative for pseudo-element */
+            overflow: hidden; /* Hide overflow */
+        }
+
+        /* Specific background positions for each section */
+        #home {
+            background-position: 0% 0%; /* Top section */
+        }
+
+        #about {
+            background-position: 0% 300%; /* Second section */
+        }
+
+        #services {
+            background-position: 0% 200%; /* Third section */
+        }
+
+        #contact {
+            background-position: 0% 100%; /* Bottom section */
+        }
+
+        /* Adding a semi-transparent background color */
+        #home::before,
+        #about::before,
+        #services::before,
+        #contact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.3); /* Black with 30% opacity */
+            z-index: 1; /* Make sure the overlay is above the background image */
+        }
+
+        h1, h2 {
+            text-shadow: 2px 2px 0px black; /* Black outline effect */
+            position: relative; /* Position relative to overlap with overlay */
+            z-index: 2; /* Make sure the text is above the overlay */
+        }
+    </style>
+    <script>
+        // Function to display a thank you modal
+        function showThankYouMessage(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Clear form fields
+            document.getElementById("name").value = '';
+            document.getElementById("comments").value = '';
+
+            // Show modal
+            document.getElementById("thankYouModal").style.display = "block";
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            document.getElementById("thankYouModal").style.display = "none";
+        }
+
+        // Close modal when user clicks outside of the modal
+        window.onclick = function(event) {
+            const modal = document.getElementById("thankYouModal");
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        };
+    </script>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <header>
+        <nav class="navbar">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="overlay">
+            <div class="content">
+                <h1>Welcome to Body Buddies</h1>
+                <h3>Your Partner in Wellness and Creativity</h3>
+                <p>Join us on a journey to enhance your well-being and foster creativity.</p>
+                <div class="buttons">
+                    <a href="#" class="btn primary">Discover Our Services</a>
+                    <a href="#" class="btn secondary">Meet Our Team</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Introduction Sections -->
+    <section id="home" class="section">
+        <h1>Welcome to Body Buddies</h1>
+        <p>At Body Buddies, we believe that health and wellness should be a joyful journey. Whether you're looking to improve your fitness, understand your body better, or find the right nutritional balance, you’re in the right place. Explore our resources, connect with our community, and let’s embark on this journey together!</p>
+    </section>
+    
+    <section id="about" class="section">
+        <h2>About Us</h2>
+        <p>Body Buddies is dedicated to promoting a healthy lifestyle through education and support. Our team consists of passionate health enthusiasts, nutritionists, and fitness experts who are committed to helping you achieve your goals. We offer a variety of services tailored to meet your individual needs, ensuring that you have the tools and support necessary for success.</p>
+    </section>
+    
+    <section id="services" class="section">
+        <h2>Our Services</h2>
+        <ul>
+            <li><strong>Body Composition Analysis:</strong> Understand your body better with our comprehensive assessments that help track your progress and inform your health journey.</li>
+            <li><strong>Nutritional Guidance:</strong> Discover meal plans and dietary advice that suit your lifestyle and dietary preferences, promoting overall health.</li>
+            <li><strong>Wellness Workshops:</strong> Join our interactive workshops that cover various topics, including stress management, healthy cooking, and mindfulness.</li>
+            <li><strong>Personalized Fitness Plans:</strong> Get a workout regimen tailored to your fitness level and goals, whether you're a beginner or a seasoned athlete.</li>
+        </ul>
+    </section>
+    
+    <section id="contact" class="section">
+        <h2>Contact Us</h2>
+        <p>We’re here to help! If you have any questions or need assistance, don’t hesitate to reach out. You can fill out our feedback form, or contact us directly through the information below. Our dedicated team is eager to assist you in any way possible.</p>
+        <p><strong>Email:</strong> support@bodybuddies.com</p>
+        <p><strong>Phone:</strong> +60 123456789</p>
+    </section>
+    
+    
+    <!-- Latest Section -->
+    <div class="latest-section">
+        <h2>Latest from Body Buddies</h2>
+        <div class="cards-container">
+            <div class="card">
                 <a href="https://syy414.github.io/BodyBuddies/BMI.html">
-                    <div class="card-image" style="background-image: url('BMI.png');"></div> 
-                    <div class="card-content"> 
-                        <h3>BMI Calculator</h3> 
-                        
-                    </div> 
+                    <div class="card-image" style="background-image: url('BMI.png');"></div>
+                    <div class="card-content">
+                        <h3>BMI Calculator</h3>
+                    </div>
                 </a>
-            </div> 
-            <div class="card"> 
+            </div>
+            <div class="card">
                 <a href="https://syy414.github.io/BodyBuddies/diet.html">
-                    <div class="card-image" style="background-image: url('Diet.jpg');"></div> 
-                    <div class="card-content"> 
-                        <h3>Diet Recommendation</h3> 
-                        
-                    </div> 
+                    <div class="card-image" style="background-image: url('Diet.jpg');"></div>
+                    <div class="card-content">
+                        <h3>Diet Recommendation</h3>
+                    </div>
                 </a>
-            </div> 
-            <div class="card"> 
+            </div>
+            <div class="card">
                 <a href="https://syy414.github.io/BodyBuddies/Anatomy.html">
-                    <div class="card-image" style="background-image: url('Anatomy.png');"></div> 
-                    <div class="card-content"> 
+                    <div class="card-image" style="background-image: url('Anatomy.png');"></div>
+                    <div class="card-content">
                         <h3>Anatomy</h3>
-                        
-                    </div> 
+                    </div>
                 </a>
-            </div> 
-            <div class="card"> 
+            </div>
+            <div class="card">
                 <a href="https://syy414.github.io/BodyBuddies/Exercise.html">
-                    <div class="card-image" style="background-image: url('Exercise.jpg');"></div> 
-                    <div class="card-content"> 
-                        <h3>Workout</h3> 
-                        
-                    </div> 
+                    <div class="card-image" style="background-image: url('Exercise.jpg');"></div>
+                    <div class="card-content">
+                        <h3>Workout</h3>
+                    </div>
                 </a>
-            </div> 
-        </div> 
-    </div> 
+            </div>
+        </div>
+    </div>
 
-    <footer> 
-        <p>&copy; 2024 Body Buddies. All rights reserved.</p> 
+    <!-- Feedback Section -->
+    <section id="feedback" class="section">
+        <h2>Feedback</h2>
+        <form onsubmit="showThankYouMessage(event);">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="comments">Comments:</label>
+            <textarea id="comments" name="comments" rows="4" required></textarea>
+
+            <button type="submit" class="btn primary">Submit Feedback</button>
+        </form>
+    </section>
+
+    <!-- Thank You Modal -->
+    <div id="thankYouModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Thank You!</h2>
+            <p>Thanks for your submission; our team will try to do the modification to fulfill your suggestions.</p>
+            <button class="btn primary" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Body Buddies. All rights reserved.</p>
     </footer>
-</body> 
+</body>
 </html>
