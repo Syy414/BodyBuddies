@@ -50,7 +50,7 @@ document.getElementById('dietLink').addEventListener('click', function() {
 document.getElementById("dietAdvice").innerText = advice;
 
 // Create a link to the diet recommendations page with the BMI category
-const dietLink = `diet.html?category=${encodeURIComponent(category)}`;
+const dietLink = `https://syy414.github.io/BodyBuddies/diet.html?category=${encodeURIComponent(category)}`;
 document.getElementById("dietLink").setAttribute("href", dietLink);
 
 // Show the modal
