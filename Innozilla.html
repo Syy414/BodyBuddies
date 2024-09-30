@@ -263,6 +263,28 @@
         </div>
     </div>
 
+    <script>
+        function showThankYouMessage(event) {
+        event.preventDefault(); // Prevent the form from submitting
+        document.getElementById("thankYouModal").style.display = "block"; // Show the modal
+        document.body.classList.add("modal-active"); // Add class to darken/blur the background
+    }
+    
+    // Close the modal
+    function closeModal() {
+        document.getElementById("thankYouModal").style.display = "none"; // Hide the modal
+        document.body.classList.remove("modal-active"); // Remove the darkening/blur effect
+    }
+    
+    // Close modal if clicking outside
+    window.onclick = function(event) {
+        var modal = document.getElementById("thankYouModal");
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
+    </script>
+    
     <!-- Feedback Section -->
     <section id="feedback" class="section">
         <h2>Feedback</h2>
@@ -295,4 +317,3 @@
     </footer>
 </body>
 </html>
-
